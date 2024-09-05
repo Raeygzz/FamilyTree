@@ -52,7 +52,17 @@ yarn expo start --web
 ## Script
 
 ```
-Configure Project - eas build:configure
+"pkg:check": "npx expo install --check",
+"pkg:fix": "npx expo install --fix",
+"prebuild": "yarn expo prebuild",
+"eas:build:configure": "eas build:configure",
+"env:to:eas": "eas secret:push --scope project --env-file ./.env",
+"local:build": "eas build --local",
+"dev:build": "eas build --profile development --platform android",
+"local:abuild": "yarn expo run:android --variant debug",
+"supa:init": "npx supabase init",
+"link:supa:database": "npx supabase link --project-ref ewrxcusjjavnccrwhvin",
+"gen:supa:types": "npx supabase gen types typescript --linked > src/types/supabase.ts"
 
 ```
 
@@ -108,4 +118,3 @@ Configure Project - eas build:configure
 ## Authors
 
 - [@ReganTimsina](https://github.com/Raeygzz/familyTree)
-

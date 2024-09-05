@@ -1,0 +1,9 @@
+{
+  "prettier.endOfLine": "lf",
+  "editor.fontSize": 12,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true
+}
