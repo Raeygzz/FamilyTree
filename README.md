@@ -52,6 +52,14 @@ yarn expo start --web
 ## Script
 
 ```
+"installPackage": "npx expo install package-name",
+"expoDoctor": "npx expo-doctor",
+"expoDoctor:help": "npx expo-doctor --help",
+"start": "npx expo start -c",
+"prebuild": "npx expo prebuild",
+"upgrade:dependencies": "npx expo install --fix",
+"prebuild:android:with:emulator": "npx expo run:android",
+"prebuild:ios:with:simulator": "npx expo run:ios",
 "pkg:check": "npx expo install --check",
 "pkg:fix": "npx expo install --fix",
 "prebuild": "yarn expo prebuild",

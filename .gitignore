@@ -29,10 +29,12 @@ web-build/
 
 # Android/IntelliJ
 #
+/android
 build/
 google-services.json
 
 # iOS
+/ios
 GoogleService-Info.plist
 
 # CocoaPods
