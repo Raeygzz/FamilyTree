@@ -3,13 +3,13 @@ name: Family Tree
 on:
   workflow_dispatch:
   push:
-    branches: ["main"] 
+    branches: ["main"]
 
 env:
   BASE_URL: "https://supabase.com/"
 
 permissions:
-  contents: read      
+  contents: read
 
 jobs:
   prepare:
@@ -26,7 +26,7 @@ jobs:
 
       - name: 📦 Install dependencies
         run: yarn install
-          
+
       - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v4  
+        uses: actions/checkout@v4
 
   integrate:
     needs: [prettify]
@@ -61,10 +61,10 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
-        
-  apkBuild:
+
+  apk-build:
     needs: [staging]
     runs-on: ubuntu-latest
     steps:
       - name: Build APK
-        run: eas build --profile preview --platform android --non-interactive --clear-cache      
+        run: eas build --profile preview --platform android --non-interactive --clear-cache
