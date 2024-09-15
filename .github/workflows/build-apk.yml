@@ -1,7 +1,7 @@
 name: Build APK With EAS
 
 on:
-  create
+  # create
   workflow_dispatch:
     inputs:
       name:
@@ -59,7 +59,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build Android app
-        run: eas build --platform android --profile preview --local --output ${{ github.workspace }}/app-release.apk  
+        run: eas build --platform android --profile preview --local --output ${{ github.workspace }}/app-release.apk
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
