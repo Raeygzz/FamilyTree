@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Typescript Check
-        run: npm run tsc
+        run: tsc
 
   lint:
     needs: [tsc]
