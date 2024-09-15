@@ -1,0 +1,35 @@
+name: Family Tree
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"] 
+
+env:
+  BASE_URL: "https://supabase.com/"
+
+permissions:
+  contents: read      
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+  lint:
+    needs: [prepare]
+    runs-on: ubuntu-latest
+
+  prettify:
+    needs: [lint]
+    runs-on: ubuntu-latest  
+
+  integrate:
+    needs: [prettify]
+    runs-on: ubuntu-latest
+
+  staging:
+    needs: [integrate]
+    runs-on: ubuntu-latest      
