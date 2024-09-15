@@ -39,8 +39,8 @@ jobs:
             exit 1
           fi
 
-      # - name: Checkout the code
-      #   uses: actions/checkout@v4
+      - name: Checkout the code
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
