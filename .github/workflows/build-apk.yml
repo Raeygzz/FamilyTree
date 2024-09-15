@@ -1,0 +1,68 @@
+name: Build APK With EAS
+
+on:
+  create
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Manual Trigger Github Action"
+        default: "Manual"
+  push:
+    branches: ["main", "releases/**", "new-features"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  hasAuth: ${{ !!secrets.EXPO_TOKEN }}
+  BASE_URL: "https://supabase.com/"
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
+
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Android app
+        run: eas build --platform android --profile preview --local --output ${{ github.workspace }}/app-release.apk  
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: ${{ github.workspace }}/app-release.apk
