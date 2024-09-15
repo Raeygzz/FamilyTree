@@ -18,6 +18,22 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: yarn
+
+      - name: 📦 Install dependencies
+        run: yarn install
+          
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
   lint:
     needs: [prepare]
     runs-on: ubuntu-latest
@@ -44,4 +60,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v4      
+        uses: actions/checkout@v4
+        
+  apkBuild:
+    needs: [staging]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build APK
+        run: eas build --profile preview --platform android --non-interactive --clear-cache      
