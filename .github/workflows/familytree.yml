@@ -21,15 +21,27 @@ jobs:
   lint:
     needs: [prepare]
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
 
   prettify:
     needs: [lint]
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4  
 
   integrate:
     needs: [prettify]
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
 
   staging:
     needs: [integrate]
-    runs-on: ubuntu-latest      
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4      
