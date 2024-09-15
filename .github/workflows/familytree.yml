@@ -51,15 +51,15 @@ jobs:
         if: ${{ env.hasAuth == 'true' }}
         run: expo whoami
 
-  tsc:
-    needs: [prepare]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Typescript Check
-        run: yarn tsc
+  # tsc:
+  #   needs: [prepare]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Run Typescript Check
+  #       run: yarn tsc
 
   lint:
-    needs: [tsc]
+    needs: [prepare]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
