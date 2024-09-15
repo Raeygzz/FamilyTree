@@ -1,7 +1,6 @@
 name: Build APK With EAS
 
 on:
-  # create
   workflow_dispatch:
     inputs:
       name:
@@ -22,6 +21,7 @@ permissions:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+
     steps:
       - name: Check for EXPO_TOKEN
         run: |
@@ -58,11 +58,21 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build Android app
-        run: eas build --platform android --profile preview --local --output ${{ github.workspace }}/app-release.apk
+  apk-build:
+    needs: [prepare]
+    runs-on: ubuntu-latest
 
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: ${{ github.workspace }}/app-release.apk
+    steps:
+      - name: Build Android app
+        run: eas build --platform android --profile preview --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
+
+  upload-artifact:
+    needs: ["apk-build"]
+    runs-on: ubuntu-latest
+    
+    steps:      
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release
+        path: ${{ github.workspace }}/app-release.apk
