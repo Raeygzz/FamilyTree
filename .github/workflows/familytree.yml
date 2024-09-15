@@ -6,6 +6,7 @@ on:
     branches: ["main"]
 
 env:
+  hasAuth: ${{ !!secrets.EXPO_TOKEN }}
   BASE_URL: "https://supabase.com/"
 
 permissions:
@@ -31,11 +32,32 @@ jobs:
         uses: expo/expo-github-action@v8
         with:
           expo-version: latest
-          eas-version: latest
+          # eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-  lint:
+      - name: 🧪 EAS installed
+        run: eas --version
+
+      - name: 🧪 EAS authenticated
+        if: ${{ env.hasAuth == 'true' }}
+        run: eas whoami
+
+      - name: 🧪 Expo installed
+        run: expo --version
+
+      - name: 🧪 Expo authenticated
+        if: ${{ env.hasAuth == 'true' }}
+        run: expo whoami
+
+  tsc:
     needs: [prepare]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Typescript Check
+        run: npm run tsc
+
+  lint:
+    needs: [tsc]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
