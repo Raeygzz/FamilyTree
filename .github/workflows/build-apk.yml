@@ -19,7 +19,16 @@ permissions:
   contents: read
 
 jobs:
+  pre-check:
+    runs-on: ubuntu-latest
+
+    name: "Pre-Check Lint, Prettier And Typescript"
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
   prepare:
+    needs: [pre-check]
     runs-on: ubuntu-latest
 
     steps:
@@ -30,8 +39,8 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout the code
-        uses: actions/checkout@v4
+      # - name: Checkout the code
+      #   uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -61,6 +70,12 @@ jobs:
       - name: Build Android app
         run: eas build --platform android --profile preview --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
 
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: ${{ github.workspace }}/app-release.apk  
+
   # apk-build:
   #   needs: [prepare]
   #   runs-on: ubuntu-latest
@@ -76,13 +91,13 @@ jobs:
   #     - name: Build Android app
   #       run: eas build --platform android --profile preview --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
 
-  upload-artifact:
-    needs: ["prepare"]
-    runs-on: ubuntu-latest
+  # upload-artifact:
+  #   needs: ["prepare"]
+  #   runs-on: ubuntu-latest
 
-    steps:      
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-release
-        path: ${{ github.workspace }}/app-release.apk
+  #   steps:      
+  #   - name: Upload Build Artifact
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: app-release
+  #       path: ${{ github.workspace }}/app-release.apk
