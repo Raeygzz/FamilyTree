@@ -48,33 +48,36 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      # - name: Setup Expo
-      #   uses: expo/expo-github-action@v8
-      #   with:
-      #     expo-version: latest
-      #     eas-version: latest
-      #     token: ${{ secrets.EXPO_TOKEN }}
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-  apk-build:
-    needs: [prepare]
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
           expo-version: latest
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
-          
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Build Android app
         run: eas build --platform android --profile preview --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
 
+  # apk-build:
+  #   needs: [prepare]
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Setup Expo
+  #       uses: expo/expo-github-action@v8
+  #       with:
+  #         expo-version: latest
+  #         eas-version: latest
+  #         token: ${{ secrets.EXPO_TOKEN }}
+
+  #     - name: Build Android app
+  #       run: eas build --platform android --profile preview --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
+
   upload-artifact:
-    needs: ["apk-build"]
+    needs: ["prepare"]
     runs-on: ubuntu-latest
 
     steps:      
