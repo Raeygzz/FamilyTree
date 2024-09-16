@@ -44,6 +44,15 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
 
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: yarn
+
+      - name: 📦 Install dependencies
+        run: yarn
+
       - run: |
           yarn tsc
           yarn lint
@@ -66,12 +75,12 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: yarn
 
-      # - name: 🏗 Setup Expo and EAS
-      #   uses: expo/expo-github-action@v8
-      #   with:
-      #     token: ${{ secrets.EXPO_TOKEN }}
-      #     expo-version: latest
-      #     eas-version: latest
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-version: latest
+          eas-version: latest
 
       - name: 📦 Install dependencies
         run: yarn
@@ -82,13 +91,13 @@ jobs:
       #     yarn lint
       #     yarn pretty
 
-      # - name: 👷 Build app
-      #   run: |
-      #     eas build --local \
-      #       --non-interactive \
-      #       --output=./app-build \
-      #       --platform=${{ github.event.inputs.platform || 'android' }} \
-      #       --profile=${{ github.event.inputs.profile || 'preview' }}
+      - name: 👷 Build app
+        run: |
+          eas build --local \
+            --non-interactive \
+            --output=./app-build \
+            --platform=${{ github.event.inputs.platform || 'android' }} \
+            --profile=${{ github.event.inputs.profile || 'preview' }}
 
       # - name: 🚢 Submit
       #   if: ${{ github.event.inputs.should_submit }}
