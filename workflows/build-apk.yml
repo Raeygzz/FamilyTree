@@ -22,12 +22,12 @@ jobs:
   pre-check:
     runs-on: ubuntu-latest
 
-    name: "Pre-Check Lint, Prettier And Typescript"
+    name: "Pre-Check Typescript, Lint And Prettier"
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
 
-  prepare:
+  build:
     needs: [pre-check]
     runs-on: ubuntu-latest
 
