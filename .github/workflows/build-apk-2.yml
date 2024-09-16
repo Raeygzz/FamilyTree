@@ -132,40 +132,38 @@ jobs:
         run: yarn
 
       - name: 👷 Build app
-        run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'preview' }} --local --non-interactive --clear-cache --output=./app-build
+        run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'preview' }} --local --non-interactive --clear-cache --output=${{ github.workspace }}/app-release.apk
+        # run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'preview' }} --local --non-interactive --clear-cache --output=./app-build
 
-      # - name: Build Android app
-      #   run: eas build --platform android --profile preview --local --output ${{ github.workspace }}/app-release.apk
-
-      - name: GET APK URL from EXPO / EAS
-        run: eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl
-
-      - name: Store APK Download URL In ENV Variable
-        run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
-
-      - name: Send mail
-        if: always()
-        uses: dawidd6/action-send-mail@v3
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
         with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          # username: ${{secrets.MAIL_USERNAME}}
-          # password: ${{secrets.MAIL_PASSWORD}}
-          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
-          to: timsina.regan@gmail.com
-          from: Developer
-          body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ env.apk_url }}
-          ignore_cert: true
-          convert_markdown: true
-          attachments: attachments.zip,git.diff,./dist/static/*.js
-          priority: low
+          name: app-release
+          path: ${{ github.workspace }}/app-release.apk
 
-      # - name: Upload APK artifact
-      #   uses: actions/upload-artifact@v4
+      # - name: GET APK URL from EXPO / EAS
+      #   run: eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl
+
+      # - name: Store APK Download URL In ENV Variable
+      #   run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
+
+      # - name: Send mail
+      #   if: always()
+      #   uses: dawidd6/action-send-mail@v3
       #   with:
-      #     name: app-release
-      #     path: ${{ github.workspace }}/app-release.apk
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     secure: true
+      #     # username: ${{secrets.MAIL_USERNAME}}
+      #     # password: ${{secrets.MAIL_PASSWORD}}
+      #     subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
+      #     to: timsina.regan@gmail.com
+      #     from: Developer
+      #     body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ env.apk_url }}
+      #     ignore_cert: true
+      #     convert_markdown: true
+      #     attachments: attachments.zip,git.diff,./dist/static/*.js
+      #     priority: low
 
       - name: 🚢 Submit
         if: ${{ github.event.inputs.should_submit }}
