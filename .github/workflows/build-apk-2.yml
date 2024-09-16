@@ -7,8 +7,8 @@ on:
         type: choice
         description: OS to build on. Ubuntu is faster, MacOS supports iOS builds
         options:
-          - macos-latest
           - ubuntu-latest
+          - macos-latest
 
       platform:
         type: choice
@@ -62,8 +62,10 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn
 
-      - name: 📋 Run Lint
-        run: yarn lint
+      - name: 📋 Pre-Check Typescript, Lint And Prettier
+        run: |
+          yarn tsc
+          yanr lint
 
       # - name: 👷 Build app
       #   run: |

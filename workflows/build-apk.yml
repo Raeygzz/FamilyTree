@@ -22,7 +22,7 @@ jobs:
   pre-check:
     runs-on: ubuntu-latest
 
-    name: "Pre-Check Typescript, Lint And Prettier"
+    name: Pre-Check Typescript, Lint And Prettier
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
@@ -74,4 +74,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: ${{ github.workspace }}/app-release.apk  
+          path: ${{ github.workspace }}/app-release.apk
