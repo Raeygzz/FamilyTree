@@ -76,6 +76,9 @@ jobs:
   build:
     needs: [pre-check]
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
+    environment:
+      name: app-${{ github.event.inputs.profile || 'development' }}
+      url: ${{ steps.artifact-upload-step.outputs.artifact-url }}
     # strategy:
     #   matrix:
     #     node: [22.x]
@@ -147,13 +150,12 @@ jobs:
       - name: Output artifact ID
         run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-url }}'    
 
-      - name: GET APK URL from EXPO / EAS
-        # run: eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl
-        run:  ${{ steps.artifact-upload-step.outputs.artifact-url }}
+      # - name: GET APK URL from EXPO / EAS
+      #   run: eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl
 
       - name: Store APK Download URL In ENV Variable
-        # run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
-        run: echo "apk_url=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
+      # run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
+      run: echo "apk_url=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
       # - name: Send mail
       #   if: always()
