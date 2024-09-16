@@ -78,7 +78,7 @@ jobs:
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
     environment:
       name: app-${{ github.event.inputs.profile || 'development' }}
-      url: ${{ steps.artifact-upload-step.outputs.artifact-url }}
+      # url: ${{ steps.artifact-upload-step.outputs.artifact-url }}
     # strategy:
     #   matrix:
     #     node: [22.x]
