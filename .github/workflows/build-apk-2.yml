@@ -86,12 +86,7 @@ jobs:
         run: yarn
 
       - name: 👷 Build app
-        run: >
-          eas build --local
-            --non-interactive
-            --output=./app-build
-            --platform=${{ github.event.inputs.platform || 'android' }}
-            --profile=${{ github.event.inputs.profile || 'preview' }}
+        run: eas build --local --non-interactive --output=./app-build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'preview' }}
 
       # - name: 🚢 Submit
       #   if: ${{ github.event.inputs.should_submit }}
