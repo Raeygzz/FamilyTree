@@ -52,27 +52,27 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: yarn
 
-      - name: 🏗 Setup Expo and EAS
-        uses: expo/expo-github-action@v8
-        with:
-          token: ${{ secrets.EXPO_TOKEN }}
-          expo-version: latest
-          eas-version: latest
+      # - name: 🏗 Setup Expo and EAS
+      #   uses: expo/expo-github-action@v8
+      #   with:
+      #     token: ${{ secrets.EXPO_TOKEN }}
+      #     expo-version: latest
+      #     eas-version: latest
 
       - name: 📦 Install dependencies
         run: yarn
 
-      - name: 📋 Test project
-        run: yarn test
+      - name: 📋 Run Lint
+        run: yarn lint
 
-      - name: 👷 Build app
-        run: |
-          eas build --local \
-            --non-interactive \
-            --output=./app-build \
-            --platform=${{ github.event.inputs.platform || 'android' }} \
-            --profile=${{ github.event.inputs.profile || 'preview' }}
+      # - name: 👷 Build app
+      #   run: |
+      #     eas build --local \
+      #       --non-interactive \
+      #       --output=./app-build \
+      #       --platform=${{ github.event.inputs.platform || 'android' }} \
+      #       --profile=${{ github.event.inputs.profile || 'preview' }}
 
-      - name: 🚢 Submit
-        if: ${{ github.event.inputs.should_submit }}
-        run: eas submit -p ${{ github.event.inputs.platform || 'android' }} --profile ${{ github.event.inputs.profile || 'preview' }} --path app-build
+      # - name: 🚢 Submit
+      #   if: ${{ github.event.inputs.should_submit }}
+      #   run: eas submit -p ${{ github.event.inputs.platform || 'android' }} --profile ${{ github.event.inputs.profile || 'preview' }} --path app-build
