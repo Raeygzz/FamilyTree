@@ -33,6 +33,7 @@ on:
         description: Whether to perform the submit step
         required: true
         default: false
+  # create:
   push:
     branches: ["main", "releases/**", "new-features"]
   pull_request:
@@ -117,19 +118,19 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: 🧪 EAS installed
-        run: eas --version
-
-      - name: 🧪 EAS authenticated
-        if: ${{ env.hasAuth == 'true' }}
-        run: eas whoami
-
-      - name: 🧪 Expo installed
+      - name: 🧪 Expo Installed (Version Check)
         run: expo --version
 
-      - name: 🧪 Expo authenticated
+      - name: 🧪 Expo Authenticated (WhoAmI)
         if: ${{ env.hasAuth == 'true' }}
         run: expo whoami
+
+      - name: 🧪 EAS Installed (Version Check)
+        run: eas --version
+
+      - name: 🧪 EAS Authenticated (WhoAmI)
+        if: ${{ env.hasAuth == 'true' }}
+        run: eas whoami
 
       - name: 📦 Install dependencies
         # run: yarn install --frozen-lockfile
@@ -150,30 +151,30 @@ jobs:
       - name: Output artifact ID
         run: echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
 
-      # - name: GET APK URL from EXPO / EAS
-      #   run: eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl
+      - name: Get More Workflow Contect Variables
+        run: echo "${{ toJson(github) }}"
 
       # - name: Store APK Download URL In ENV Variable
       # # run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
       # run: echo "apk_url=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
-      # - name: Send mail
-      #   if: always()
-      #   uses: dawidd6/action-send-mail@v3
-      #   with:
-      #     server_address: smtp.gmail.com
-      #     server_port: 465
-      #     secure: true
-      #     # username: ${{secrets.MAIL_USERNAME}}
-      #     # password: ${{secrets.MAIL_PASSWORD}}
-      #     subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
-      #     to: timsina.regan@gmail.com
-      #     from: Developer
-      #     body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ env.apk_url }}
-      #     ignore_cert: true
-      #     convert_markdown: true
-      #     attachments: attachments.zip,git.diff,./dist/static/*.js
-      #     priority: low
+      - name: Send mail
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          # username: ${{secrets.MAIL_USERNAME}}
+          # password: ${{secrets.MAIL_PASSWORD}}
+          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
+          to: timsina.regan@gmail.com
+          from: Developer
+          body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ env.apk_url }}
+          ignore_cert: true
+          convert_markdown: true
+          attachments: attachments.zip,git.diff,./dist/static/*.js
+          priority: low
 
       - name: 🚢 Submit
         if: ${{ github.event.inputs.should_submit }}
