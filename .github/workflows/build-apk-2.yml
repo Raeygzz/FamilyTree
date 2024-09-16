@@ -41,6 +41,7 @@ on:
 env:
   hasAuth: ${{ !!secrets.EXPO_TOKEN }}
   BASE_URL: "https://supabase.com/"
+  BUILD_ARTIFACT_NAME: app-${{ github.event.inputs.profile || 'development' }}
 
 permissions:
   contents: read
@@ -132,20 +133,27 @@ jobs:
         run: yarn
 
       - name: 👷 Build app
-        run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'preview' }} --local --non-interactive --clear-cache --output=${{ github.workspace }}/app-release.apk
-        # run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'preview' }} --local --non-interactive --clear-cache --output=./app-build
+        run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'development' }} --local --non-interactive --clear-cache --output=${{ github.workspace }}/app-release.apk
+        # run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'development' }} --local --non-interactive --clear-cache --output=./app-build
 
-      - name: Upload APK artifact
+      - name: Upload A Build APK Artifact
         uses: actions/upload-artifact@v4
+        id: artifact-upload-step
         with:
-          name: app-release
+          name: ${{ env.BUILD_ARTIFACT_NAME }}
+          retention-days: 14
           path: ${{ github.workspace }}/app-release.apk
 
-      # - name: GET APK URL from EXPO / EAS
-      #   run: eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl
+      - name: Output artifact ID
+        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-url }}'    
 
-      # - name: Store APK Download URL In ENV Variable
-      #   run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
+      - name: GET APK URL from EXPO / EAS
+        # run: eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl
+        run:  ${{ steps.artifact-upload-step.outputs.artifact-url }}
+
+      - name: Store APK Download URL In ENV Variable
+        # run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
+        run: echo "apk_url=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
       # - name: Send mail
       #   if: always()
