@@ -78,7 +78,7 @@ jobs:
     # needs: [pre-check]
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
     env:
-      JAVA_TOOL_OPTIONS: "-Xmx4g" # Increase this to 4GB, adjust as needed
+      JAVA_TOOL_OPTIONS: "-Xmx8g -XX:MaxPermSize=1024m" # Increase this to Xmx4g - 4GB, adjust as needed
     environment:
       name: app-${{ github.event.inputs.profile || 'development' }}
       url: ${{ steps.artifact-upload-step.outputs.artifact-url }}
@@ -168,7 +168,8 @@ jobs:
           server_port: 465
           secure: true
           # username: ${{secrets.MAIL_USERNAME}}
-          # password: ${{secrets.MAIL_PASSWORD}}
+          username: timsina.regan
+          password: ${{secrets.MAIL_PASSWORD}}
           subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
           to: timsina.regan@gmail.com
           from: Developer
