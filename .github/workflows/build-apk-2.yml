@@ -66,6 +66,7 @@ jobs:
         run: |
           yarn tsc
           yarn lint
+          yarn pretty
 
       # - name: 👷 Build app
       #   run: |
