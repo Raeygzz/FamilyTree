@@ -39,7 +39,6 @@ jobs:
   pre-check:
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
 
-    name: Pre-Check Typescript, Lint And Prettier
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
@@ -53,7 +52,8 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn
 
-      - run: |
+      - name: Pre-Check Typescript, Lint And Prettier
+        run: |
           yarn tsc
           yarn lint
           yarn pretty
@@ -85,18 +85,12 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn
 
-      # - name: 📋 Pre-Check Typescript, Lint And Prettier
-      #   run: |
-      #     yarn tsc
-      #     yarn lint
-      #     yarn pretty
-
       - name: 👷 Build app
-        run: |
-          eas build --local \
-            --non-interactive \
-            --output=./app-build \
-            --platform=${{ github.event.inputs.platform || 'android' }} \
+        run: >
+          eas build --local
+            --non-interactive
+            --output=./app-build
+            --platform=${{ github.event.inputs.platform || 'android' }}
             --profile=${{ github.event.inputs.profile || 'preview' }}
 
       # - name: 🚢 Submit
