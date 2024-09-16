@@ -3,6 +3,9 @@ name: Build APK With EAS - 2
 on:
   workflow_dispatch:
     inputs:
+      # name:
+      #   description: "Manual Trigger Github Action"
+      #   default: "Manual"
       os:
         type: choice
         description: OS to build on. Ubuntu is faster, MacOS supports iOS builds
@@ -34,6 +37,13 @@ on:
     branches: ["main", "releases/**", "new-features"]
   pull_request:
     branches: ["main"]
+
+env:
+  hasAuth: ${{ !!secrets.EXPO_TOKEN }}
+  BASE_URL: "https://supabase.com/"
+
+permissions:
+  contents: read
 
 jobs:
   pre-check:
@@ -70,7 +80,14 @@ jobs:
     #     node: [22.x]
 
     steps:
-      - name: 🏗 Setup repo
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
+
+      - name: 🏗 Checkout the repo
         uses: actions/checkout@v4
 
       - name: 🏗 Setup Node
@@ -83,21 +100,72 @@ jobs:
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
-          distribution: "temurin"
           java-version: "17"
+          distribution: "temurin"
+
+      - name: Setup Android SDK Tool
+        uses: android-actions/setup-android@v3.2.1
 
       - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v8
         with:
-          token: ${{ secrets.EXPO_TOKEN }}
           expo-version: latest
           eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 🧪 EAS installed
+        run: eas --version
+
+      - name: 🧪 EAS authenticated
+        if: ${{ env.hasAuth == 'true' }}
+        run: eas whoami
+
+      - name: 🧪 Expo installed
+        run: expo --version
+
+      - name: 🧪 Expo authenticated
+        if: ${{ env.hasAuth == 'true' }}
+        run: expo whoami
 
       - name: 📦 Install dependencies
+        # run: yarn install --frozen-lockfile
         run: yarn
 
       - name: 👷 Build app
-        run: eas build --local --non-interactive --output=./app-build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'preview' }} --clear-cache
+        run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'preview' }} --local --non-interactive --clear-cache --output=./app-build
+
+      # - name: Build Android app
+      #   run: eas build --platform android --profile preview --local --output ${{ github.workspace }}/app-release.apk
+
+      - name: GET APK URL from EXPO / EAS
+        run: eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl
+
+      - name: Store APK Download URL In ENV Variable
+        run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
+
+      - name: Send mail
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          # username: ${{secrets.MAIL_USERNAME}}
+          # password: ${{secrets.MAIL_PASSWORD}}
+          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
+          to: timsina.regan@gmail.com
+          from: Developer
+          body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ env.apk_url }}
+          ignore_cert: true
+          convert_markdown: true
+          attachments: attachments.zip,git.diff,./dist/static/*.js
+          priority: low
+
+      # - name: Upload APK artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: app-release
+      #     path: ${{ github.workspace }}/app-release.apk
 
       - name: 🚢 Submit
         if: ${{ github.event.inputs.should_submit }}

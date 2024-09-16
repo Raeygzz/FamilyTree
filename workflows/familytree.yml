@@ -64,29 +64,8 @@ jobs:
         if: ${{ env.hasAuth == 'true' }}
         run: expo whoami
 
-  # tsc:
-  #   needs: [prepare]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Run Typescript Check
-  #       run: yarn tsc
-
-  lint:
-    needs: [prepare]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-
-  prettify:
-    needs: [lint]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-
   integrate:
-    needs: [prettify]
+    needs: [prepare]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
