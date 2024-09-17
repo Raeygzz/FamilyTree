@@ -107,11 +107,24 @@ jobs:
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
+          # java-version: "17"
+          # distribution: "temurin"
           java-version: "17"
-          distribution: "temurin"
+          distribution: "zulu" # See 'Supported distributions' for available options
+
+      - name: Check Java version
+        run: |
+          java -version    
+          java HelloWorldApp.java
 
       - name: Setup Android SDK Tool
-        uses: android-actions/setup-android@v3.2.1
+        uses: android-actions/setup-android@v3
+
+      - name: Clean Gradle Cache
+        run: ./gradlew clean
+
+      - name: Refresh dependencies
+        run: ./gradlew --refresh-dependencies
 
       - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v8
@@ -138,6 +151,9 @@ jobs:
         # run: yarn install --frozen-lockfile
         run: yarn
 
+      - name: Get More Workflow Contect Variables
+        run: echo "${{ toJson(github) }}"
+
       - name: 👷 Build App
         run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'development' }} --local --non-interactive --clear-cache --output=${{ github.workspace }}/app-release.apk
         # run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'development' }} --local --non-interactive --clear-cache --output=./app-build
@@ -153,12 +169,9 @@ jobs:
       # - name: Output artifact ID
       #   run: echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
 
-      - name: Get More Workflow Contect Variables
-        run: echo "${{ toJson(github) }}"
-
-      # - name: Store APK Download URL In ENV Variable
-      # # run: echo "apk_url=$(eas build:list --json --limit=1 --platform=${{ github.event.inputs.platform || 'android' }} |  jq -r .[0].artifacts.buildUrl)" >> $GITHUB_ENV
-      # run: echo "apk_url=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
+      - name: Store APK Download URL In ENV Variable
+        run: |
+          echo "APK_URL=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
       - name: Send mail
         if: always()
