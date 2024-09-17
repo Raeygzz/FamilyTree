@@ -110,8 +110,8 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Setup Android SDK Tool
-        uses: android-actions/setup-android@v3.2.1
+      # - name: Setup Android SDK Tool
+      #   uses: android-actions/setup-android@v3.2.1
 
       - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v8
@@ -120,19 +120,19 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: 🧪 Expo Installed (Version Check)
-        run: expo --version
+      # - name: 🧪 Expo Installed (Version Check)
+      #   run: expo --version
 
-      - name: 🧪 Expo Authenticated (WhoAmI)
-        if: ${{ env.hasAuth == 'true' }}
-        run: expo whoami
+      # - name: 🧪 Expo Authenticated (WhoAmI)
+      #   if: ${{ env.hasAuth == 'true' }}
+      #   run: expo whoami
 
-      - name: 🧪 EAS Installed (Version Check)
-        run: eas --version
+      # - name: 🧪 EAS Installed (Version Check)
+      #   run: eas --version
 
-      - name: 🧪 EAS Authenticated (WhoAmI)
-        if: ${{ env.hasAuth == 'true' }}
-        run: eas whoami
+      # - name: 🧪 EAS Authenticated (WhoAmI)
+      #   if: ${{ env.hasAuth == 'true' }}
+      #   run: eas whoami
 
       - name: 📦 Install dependencies
         # run: yarn install --frozen-lockfile
@@ -150,8 +150,8 @@ jobs:
           retention-days: 14
           path: ${{ github.workspace }}/app-release.apk
 
-      - name: Output artifact ID
-        run: echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
+      # - name: Output artifact ID
+      #   run: echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
 
       - name: Get More Workflow Contect Variables
         run: echo "${{ toJson(github) }}"
