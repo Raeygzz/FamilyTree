@@ -113,9 +113,7 @@ jobs:
           distribution: "zulu" # See 'Supported distributions' for available options
 
       - name: Check Java version
-        run: |
-          java -version    
-          java HelloWorldApp.java
+        run: java -version
 
       - name: Setup Android SDK Tool
         uses: android-actions/setup-android@v3
