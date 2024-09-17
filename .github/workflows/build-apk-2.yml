@@ -78,7 +78,7 @@ jobs:
     # needs: [pre-check]
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
     env:
-      JAVA_TOOL_OPTIONS: "-Xmx8g" # Increase this to Xmx4g - 4GB, adjust as needed
+      JAVA_TOOL_OPTIONS: "-Xmx4g" # Increase this to Xmx4g - 4GB, adjust as needed
     environment:
       name: app-${{ github.event.inputs.profile || 'development' }}
       url: ${{ steps.artifact-upload-step.outputs.artifact-url }}
@@ -173,7 +173,7 @@ jobs:
           subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
           to: timsina.regan@gmail.com
           from: Developer
-          body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ env.apk_url }}
+          body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ steps.artifact-upload-step.outputs.artifact-url }}
           ignore_cert: true
           convert_markdown: true
           attachments: attachments.zip,git.diff,./dist/static/*.js
