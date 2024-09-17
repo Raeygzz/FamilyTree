@@ -77,8 +77,8 @@ jobs:
   build:
     # needs: [pre-check]
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
-    env:
-      JAVA_TOOL_OPTIONS: "-Xmx4g" # Increase this to Xmx4g - 4GB, adjust as needed
+    # env:
+    #   JAVA_TOOL_OPTIONS: "-Xmx4g" # Increase this to Xmx4g - 4GB, adjust as needed
     environment:
       name: app-${{ github.event.inputs.profile || 'development' }}
       url: ${{ steps.artifact-upload-step.outputs.artifact-url }}
@@ -115,8 +115,8 @@ jobs:
       - name: Check Java version
         run: java -version
 
-      # - name: Setup Android SDK Tool
-      #   uses: android-actions/setup-android@v3
+      - name: Setup Android SDK Tool
+        uses: android-actions/setup-android@v3
 
       - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v8
@@ -140,8 +140,11 @@ jobs:
       #   run: eas whoami
 
       - name: 📦 Install dependencies
-        # run: yarn install --frozen-lockfile
-        run: yarn
+        run: yarn install --frozen-lockfile
+      # run: yarn
+      
+      - name: Yarn Cache Clean
+        run: yarn cache clean
 
       - name: Get More Workflow Contect Variables
         run: echo "${{ toJson(github) }}"

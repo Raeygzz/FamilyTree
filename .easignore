@@ -1,3 +1,6 @@
 !.env
-!.env.*
+!.env.\*
 !google-services.json
+
+/android
+/ios
