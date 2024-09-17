@@ -167,8 +167,8 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
-          # username: ${{secrets.MAIL_USERNAME}}
-          username: timsina.regan
+          # username: timsina.regan
+          username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
           subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
           to: timsina.regan@gmail.com
