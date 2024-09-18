@@ -26,6 +26,12 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
 
+      - name: Pre-Check Typescript, Lint And Prettier
+        run: |
+          yarn tsc
+          yarn lint
+          yarn pretty
+
   build:
     needs: [pre-check]
     runs-on: ubuntu-latest
