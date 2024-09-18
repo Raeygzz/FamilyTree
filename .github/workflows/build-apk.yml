@@ -3,17 +3,28 @@ name: Build APK With EAS
 on:
   workflow_dispatch:
     inputs:
-      name:
-        description: "Manual Trigger Github Action"
-        default: "Manual"
+      platform:
+        type: choice
+        description: Platform to build for
+        options:
+          - android
+          - ios
+
+      profile:
+        type: choice
+        description: Build profile to use
+        options:
+          - development
+          - preview
+          - production
   push:
-    branches: ["main", "releases/**", "new-features"]
+    branches: ["main", "releases/**", "FT-**"]
   pull_request:
     branches: ["main"]
 
 env:
   hasAuth: ${{ !!secrets.EXPO_TOKEN }}
-  BASE_URL: "https://supabase.com/"
+  BUILD_ARTIFACT_NAME: app-${{ github.event.inputs.profile || 'development' }}
 
 permissions:
   contents: read
@@ -44,15 +55,11 @@ jobs:
   build:
     needs: [pre-check]
     runs-on: ubuntu-latest
+    environment:
+      name: app-${{ github.event.inputs.profile || 'development' }}
+      url: ${{ steps.artifact-upload-step.outputs.artifact-url }}
 
     steps:
-      - name: Check for EXPO_TOKEN
-        run: |
-          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
-            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-            exit 1
-          fi
-
       - name: Checkout the code
         uses: actions/checkout@v4
 
@@ -68,10 +75,10 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Setup Android SDK
+      - name: Setup Android SDK Tool
         uses: android-actions/setup-android@v3
 
-      - name: Setup Expo
+      - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
         with:
           expo-version: latest
@@ -81,11 +88,13 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build Android app
-        run: eas build --platform android --profile preview --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
+      - name: Build ${{ github.event.inputs.platform || 'android' }} App
+        run: eas build --platform ${{ github.event.inputs.platform || 'android' }} --profile ${{ github.event.inputs.profile || 'development' }} --local --non-interactive --clear-cache --output ${{ github.workspace }}/${{ env.BUILD_ARTIFACT_NAME }}-release.apk
 
-      - name: Upload Build Artifact
+      - name: Upload A ${{ github.event.inputs.platform || 'android' }} Build Artifact
         uses: actions/upload-artifact@v4
+        id: artifact-upload-step
         with:
-          name: app-release
+          name: ${{ env.BUILD_ARTIFACT_NAME }}
+          retention-days: 14
           path: ${{ github.workspace }}/app-release.apk
