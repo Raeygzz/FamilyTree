@@ -2,6 +2,14 @@ name: Prepare Reusable
 
 on:
   workflow_call:
+    inputs:
+      MY_SECRET:
+        description: "Secret Token"
+        required: true
+        type: string
+    secrets:
+      SECRET_NAME:
+        required: true
 
 jobs:
   build:
@@ -32,6 +40,12 @@ jobs:
         run: |
           sdkmanager "cmake;3.30.3"  # Installing CMake 3.10.2
           sdkmanager "ndk;27.1.12297006"  # Installing NDK 21, known to be stable with Expo
+
+      - name: Access secret passed via inputs
+        run: echo "The secret token is ${{ inputs.MY_SECRET }}"
+
+      - name: Access secret passed via environment variable
+        run: echo "The secret is ${{ secrets.SECRET_NAME }}"
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8

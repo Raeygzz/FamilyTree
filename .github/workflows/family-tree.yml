@@ -21,6 +21,11 @@ jobs:
   call_build_workflow:
     needs: [call_pre-check_workflow]
     uses: ./.github/workflows/build-reusable.yml
+    # uses: Raeygzz/FamilyTree/.github/workflows/build-reusable.yml@main
+    with:
+      MY_SECRET: "REGAN TIMSINA"
+    secrets:
+      SECRET_NAME: ${{ secrets.EXPO_TOKEN }}
 
   call_artifact_workflow:
     needs: [call_build_workflow]
