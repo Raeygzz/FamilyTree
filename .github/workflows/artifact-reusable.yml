@@ -14,7 +14,8 @@ jobs:
         with:
           name: app-development
           retention-days: 14
-          path: ${{ github.workspace }}/app-release.apk
+          path: dist/
+          # path: ${{ github.workspace }}/app-release.apk
 
       - name: Send mail
         if: always()
