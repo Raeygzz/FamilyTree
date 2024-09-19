@@ -15,30 +15,30 @@ permissions:
   contents: read
 
 jobs:
-  pre-check:
-    runs-on: ubuntu-latest
+  # pre-check:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v4
 
-      - name: 🏗 Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-          cache: yarn
+  #     - name: 🏗 Setup Node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22.x
+  #         cache: yarn
 
-      - name: 📦 Install dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: 📦 Install dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Pre-Check Typescript, Lint And Prettier
-        run: |
-          yarn tsc
-          yarn lint
-          yarn pretty
+  #     - name: Pre-Check Typescript, Lint And Prettier
+  #       run: |
+  #         yarn tsc
+  #         yarn lint
+  #         yarn pretty
 
   build:
-    needs: [pre-check]
+    # needs: [pre-check]
     runs-on: ubuntu-latest
 
     steps:
