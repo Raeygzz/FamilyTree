@@ -1,13 +1,10 @@
-name: Prepare Reusable
+name: Pre-check Reusable
 
 on:
   workflow_call:
 
-permissions:
-  contents: read
-
 jobs:
-  prepare:
+  pre-check:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,3 +19,9 @@ jobs:
 
       - name: 📦 Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Pre-Check Typescript, Lint And Prettier
+        run: |
+          yarn tsc
+          yarn lint
+          yarn pretty

@@ -1,0 +1,27 @@
+name: Family Tree
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Manual Trigger Github Action"
+        default: "Manual"
+  push:
+    branches: ["main", "releases/**", "FT-**"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  call_pre-check_workflow:
+    uses: ./.github/workflows/pre-check-reusable.yml
+
+  call_build_workflow:
+    needs: [call_pre-check_workflow]
+    uses: ./.github/workflows/build-reusable.yml
+
+  call_artifact_workflow:
+    needs: [call_build_workflow]
+    uses: ./.github/workflows/artifact-reusable.yml
