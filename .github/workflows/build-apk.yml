@@ -41,7 +41,7 @@ jobs:
     # needs: [pre-check]
     runs-on: ubuntu-latest
     env:
-      JAVA_TOOL_OPTIONS: "-Xmx4g" # Increase this to Xmx4g - 4GB, adjust as needed
+      JAVA_TOOL_OPTIONS: "-Xmx6g" # Increase this to Xmx4g - 4GB, adjust as needed
 
     steps:
       - name: Checkout the code
@@ -50,7 +50,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 20.x
           cache: yarn
 
       - name: Set up JDK 17
@@ -72,8 +72,11 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Set Gradle Memory Options
+        run: echo "org.gradle.jvmargs=-Xmx6g -XX:MaxPermSize=512m" >> ./android/gradle.properties
+
       - name: Build Android App
-        run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
+        run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk -- --max-workers 2
 
       - name: Upload A Android Build Artifact
         uses: actions/upload-artifact@v4
