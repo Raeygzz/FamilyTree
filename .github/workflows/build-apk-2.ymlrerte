@@ -142,16 +142,22 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn install --frozen-lockfile
       # run: yarn
+
       # - name: Yarn Cache Clean
       #   run: yarn cache clean
+
       # - name: Get More Workflow Contect Variables
       #   run: echo "${{ toJson(github) }}"
+
       # - name: Prebuild Android
       #   run: yarn expo prebuild --no-install --platform android
+
       # - name: Clean Gradle Cache
       #   run: cd android && ./gradlew clean
+
       # - name: Refresh dependencies
       #   run: cd android && ./gradlew --refresh-dependencies
+      
       - name: 👷 Build ${{ github.event.inputs.platform || 'android' }} App
         run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'development' }} --local --non-interactive --clear-cache --output=${{ github.workspace }}/app-release.apk
         # run: eas build --platform=${{ github.event.inputs.platform || 'android' }} --profile=${{ github.event.inputs.profile || 'development' }} --local --non-interactive --clear-cache --output=./app-build

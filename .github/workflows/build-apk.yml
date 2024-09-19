@@ -72,6 +72,15 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Prebuild Android
+        run: yarn expo prebuild --no-install --platform android
+
+      - name: Clean Gradle Cache
+        run: cd android && ./gradlew clean
+
+      - name: Refresh dependencies
+        run: cd android && ./gradlew --refresh-dependencies
+
       - name: Set Gradle Memory Options
         run: echo "org.gradle.jvmargs=-Xmx6g -XX:MaxPermSize=512m" >> ./android/gradle.properties
 
