@@ -61,6 +61,13 @@ jobs:
 
       - name: Setup Android SDK Tool
         uses: android-actions/setup-android@v3
+        # with:
+        # sdk-version: "30.0.3"  # Adjust this based on your project
+
+      - name: Install CMake and NDK
+        run: |
+          sdkmanager "cmake;3.30.3"  # Installing CMake 3.10.2
+          sdkmanager "ndk;27.1.12297006"  # Installing NDK 21, known to be stable with Expo
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
