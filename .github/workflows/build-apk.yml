@@ -83,20 +83,20 @@ jobs:
           retention-days: 14
           path: ${{ github.workspace }}/app-release.apk
 
-      - name: Send mail
-        if: always()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: ${{secrets.MAIL_USERNAME}}
-          password: ${{secrets.MAIL_PASSWORD}}
-          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
-          to: timsina.regan@gmail.com
-          from: Developer
-          body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ steps.artifact-upload-step.outputs.artifact-url }}
-          ignore_cert: true
-          convert_markdown: true
-          attachments: attachments.zip,git.diff,./dist/static/*.js
-          priority: low
+      # - name: Send mail
+      #   if: always()
+      #   uses: dawidd6/action-send-mail@v3
+      #   with:
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     secure: true
+      #     username: ${{secrets.MAIL_USERNAME}}
+      #     password: ${{secrets.MAIL_PASSWORD}}
+      #     subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
+      #     to: timsina.regan@gmail.com
+      #     from: Developer
+      #     body: ${{ github.job }} job in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} APK URL -> ${{ steps.artifact-upload-step.outputs.artifact-url }}
+      #     ignore_cert: true
+      #     convert_markdown: true
+      #     attachments: attachments.zip,git.diff,./dist/static/*.js
+      #     priority: low
