@@ -15,14 +15,17 @@ permissions:
   contents: read
 
 jobs:
-  call_prepare_workflow:
-    uses: ./.github/workflows/prepare-reusable.yml
+  # call_prepare_workflow:
+  #   uses: ./.github/workflows/prepare-reusable.yml
 
   pre-check:
-    needs: [call_prepare_workflow]
+    # needs: [call_prepare_workflow]
     runs-on: ubuntu-latest
 
     steps:
+      - name: Reusable Workflow Prepare
+        uses: ./.github/workflows/prepare-reusable.yml
+
       # - name: Checkout the code
       #   uses: actions/checkout@v4
 
