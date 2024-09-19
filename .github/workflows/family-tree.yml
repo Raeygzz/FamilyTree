@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  checks: write
 
 jobs:
   call_pre-check_workflow:
