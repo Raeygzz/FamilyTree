@@ -27,3 +27,6 @@ jobs:
   call_artifact_workflow:
     needs: [call_build_workflow]
     uses: ./.github/workflows/artifact-reusable.yml
+    secrets:
+      MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+      MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
