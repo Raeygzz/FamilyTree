@@ -2,11 +2,6 @@ name: Prepare Reusable
 
 on:
   workflow_call:
-    inputs:
-      MY_SECRET:
-        description: "Secret Token"
-        required: true
-        type: string
     secrets:
       EXPO_TOKEN:
         required: true
@@ -18,13 +13,6 @@ jobs:
       JAVA_TOOL_OPTIONS: "-Xmx6g" # Increase this to Xmx4g - 4GB, adjust as needed
 
     steps:
-      - name: Check for EXPO_TOKEN
-        run: |
-          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
-            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-            exit 1
-          fi
-
       - name: Checkout the code
         uses: actions/checkout@v4
 
@@ -48,12 +36,6 @@ jobs:
           sdkmanager "cmake;3.30.3"  # Installing CMake 3.10.2
           sdkmanager "ndk;27.1.12297006"  # Installing NDK 21, known to be stable with Expo
 
-      - name: Access secret passed via inputs
-        run: echo "The secret token is ${{ inputs.MY_SECRET }}"
-
-      - name: Access secret passed via environment variable
-        run: echo "The secret is ${{ secrets.EXPO_TOKEN }}"
-
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
         with:
@@ -64,17 +46,17 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Prebuild Android
-        run: yarn expo prebuild --no-install --platform android
+      # - name: Prebuild Android
+      #   run: yarn expo prebuild --no-install --platform android
 
-      - name: Clean Gradle Cache
-        run: cd android && ./gradlew clean
+      # - name: Clean Gradle Cache
+      #   run: cd android && ./gradlew clean
 
-      - name: Refresh dependencies
-        run: cd android && ./gradlew --refresh-dependencies
+      # - name: Refresh dependencies
+      #   run: cd android && ./gradlew --refresh-dependencies
 
-      - name: Set Gradle Memory Options
-        run: echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=512m" >> ./android/gradle.properties
+      # - name: Set Gradle Memory Options
+      #   run: echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=512m" >> ./android/gradle.properties
 
       - name: Build Android App
         run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
