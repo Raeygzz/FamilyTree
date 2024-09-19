@@ -82,7 +82,7 @@ jobs:
         run: cd android && ./gradlew --refresh-dependencies
 
       - name: Set Gradle Memory Options
-        run: echo "org.gradle.jvmargs=-Xmx6g -XX:MaxPermSize=512m" >> ./android/gradle.properties
+        run: echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=512m" >> ./android/gradle.properties
 
       - name: Build Android App
         run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
