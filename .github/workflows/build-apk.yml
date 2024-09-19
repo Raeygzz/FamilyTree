@@ -40,6 +40,8 @@ jobs:
   build:
     # needs: [pre-check]
     runs-on: ubuntu-latest
+    env:
+      JAVA_TOOL_OPTIONS: "-Xmx4g" # Increase this to Xmx4g - 4GB, adjust as needed
 
     steps:
       - name: Checkout the code
