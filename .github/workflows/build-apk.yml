@@ -85,7 +85,7 @@ jobs:
         run: echo "org.gradle.jvmargs=-Xmx6g -XX:MaxPermSize=512m" >> ./android/gradle.properties
 
       - name: Build Android App
-        run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk -- --max-workers 2
+        run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
 
       - name: Upload A Android Build Artifact
         uses: actions/upload-artifact@v4
