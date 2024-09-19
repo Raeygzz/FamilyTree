@@ -8,7 +8,7 @@ on:
         required: true
         type: string
     secrets:
-      SECRET_NAME:
+      EXPO_TOKEN:
         required: true
 
 jobs:
@@ -18,6 +18,13 @@ jobs:
       JAVA_TOOL_OPTIONS: "-Xmx6g" # Increase this to Xmx4g - 4GB, adjust as needed
 
     steps:
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
+
       - name: Checkout the code
         uses: actions/checkout@v4
 
@@ -45,7 +52,7 @@ jobs:
         run: echo "The secret token is ${{ inputs.MY_SECRET }}"
 
       - name: Access secret passed via environment variable
-        run: echo "The secret is ${{ secrets.SECRET_NAME }}"
+        run: echo "The secret is ${{ secrets.EXPO_TOKEN }}"
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
