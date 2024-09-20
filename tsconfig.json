@@ -2,7 +2,12 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    // "module": "NodeNext",
     "skipLibCheck": true,
+    // "moduleDetection": "force",
+    // "verbatimModuleSyntax": true,
+    // "moduleResolution": "NodeNext",
+    // "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["./*"]

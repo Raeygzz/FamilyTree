@@ -10,7 +10,16 @@
     "test": "jest --watchAll",
     "tsc": "tsc",
     "lint": "expo lint",
-    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
+    "pretty": "prettier --write --ignore-unknown \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint"
+    ],
+    "*": [
+      "prettier --write --ignore-unknown"
+    ]
   },
   "jest": {
     "preset": "jest-expo"
@@ -28,6 +37,8 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "nativewind": "^4.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
