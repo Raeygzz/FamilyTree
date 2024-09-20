@@ -4,12 +4,15 @@ export default function App() {
   const xyz = 10;
 
   function example(args = 1) {
-    if (args == 1) {
-      // do something
+    if (args === 1) {
+      // do somethings
     } else if (args === 2) {
-      // do something
+      console.log(xyz);
+      // do somethings
     }
   }
+
+  example();
 
   return (
     <View className="flex-1 border-4 border-blue-700 justify-center items-center">
