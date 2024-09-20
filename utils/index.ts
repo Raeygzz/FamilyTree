@@ -4,4 +4,4 @@ function example(xyz = 10) {
   }
 }
 
-example(1);
+// example(1);
