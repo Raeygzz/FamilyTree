@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 
 export default function App() {
-  const xyz = 10;
+  const xyz = 100;
 
   function example(args = 1) {
     if (args === 1) {
