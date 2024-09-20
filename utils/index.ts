@@ -1,4 +1,5 @@
-function example(xyz = 10) {
+function example(xyz = 10) 
+{
   if (xyz === 1) {
     // do something
   }
