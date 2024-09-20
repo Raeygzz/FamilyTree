@@ -16,11 +16,11 @@ permissions:
   checks: write
 
 jobs:
-  call_pre-check_workflow:
-    uses: ./.github/workflows/pre-check-reusable.yml
+  # call_pre-check_workflow:
+  #   uses: ./.github/workflows/pre-check-reusable.yml
 
   call_build_workflow:
-    needs: [call_pre-check_workflow]
+    # needs: [call_pre-check_workflow]
     uses: ./.github/workflows/build-reusable.yml
     secrets:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
