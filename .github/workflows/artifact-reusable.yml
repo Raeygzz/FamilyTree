@@ -13,16 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
-          draft: false
-          prerelease: false
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: v${{ github.run_number }}
+      #     release_name: Release ${{ github.run_number }}
+      #     draft: false
+      #     prerelease: false
 
       - name: Upload A Android Build Artifact
         uses: actions/upload-artifact@v4
@@ -30,8 +30,8 @@ jobs:
         with:
           name: app-development
           retention-days: 14
-          path: dist/
-          # path: ${{ github.workspace }}/app-release.apk
+          # path: dist/
+          path: ${{ github.workspace }}/app-release.apk
 
       - name: Send mail
         if: always()

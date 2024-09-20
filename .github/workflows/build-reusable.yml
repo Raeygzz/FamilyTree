@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      JAVA_TOOL_OPTIONS: "-Xmx8g" # Increase this to Xmx4g - 4GB, adjust as needed
+      JAVA_TOOL_OPTIONS: "-Xmx6g" # Increase this to Xmx4g - 4GB, adjust as needed
 
     steps:
       - name: Checkout the code
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 20.x
           cache: yarn
 
       - name: Set up JDK 17
@@ -63,3 +63,6 @@ jobs:
 
       # - name: Build Android App
       #   run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
+
+      - name: Build IOS App
+        run: eas build --platform ios --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
