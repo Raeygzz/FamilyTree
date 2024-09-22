@@ -43,8 +43,12 @@ GoogleService-Info.plist
 # node.js
 #
 node_modules/
-npm-debug.log
-yarn-error.log
+logs
+*.log
+npm-debug.log*
+npm-error.log*
+yarn-debug.log*
+yarn-error.log*
 
 # BUCK
 buck-out/
