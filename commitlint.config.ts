@@ -9,6 +9,7 @@ const Configuration: UserConfig = {
       2,
       "always",
       [
+        "add", // Code addition
         "feat", // New features
         "fix", // Bug fixes
         "chore", // Maintenance tasks

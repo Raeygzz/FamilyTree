@@ -51,27 +51,56 @@ yarn expo start --web
 
 ## Script
 
-```
-"installPackage": "npx expo install package-name",
-"expoDoctor": "npx expo-doctor",
-"expoDoctor:help": "npx expo-doctor --help",
-"start": "npx expo start -c",
-"prebuild": "npx expo prebuild",
-"upgrade:dependencies": "npx expo install --fix",
-"prebuild:android:with:emulator": "npx expo run:android",
-"prebuild:ios:with:simulator": "npx expo run:ios",
-"pkg:check": "npx expo install --check",
-"pkg:fix": "npx expo install --fix",
-"prebuild": "yarn expo prebuild",
-"eas:build:configure": "eas build:configure",
-"env:to:eas": "eas secret:push --scope project --env-file ./.env",
-"local:build": "eas build --local",
-"dev:build": "eas build --profile development --platform android",
-"local:abuild": "yarn expo run:android --variant debug",
-"supa:init": "npx supabase init",
-"link:supa:database": "npx supabase link --project-ref ewrxcusjjavnccrwhvin",
-"gen:supa:types": "npx supabase gen types typescript --linked > src/types/supabase.ts"
+#### Expo, EAS
 
+```bash
+"ci": "yarn tsc && yarn lint",
+
+"installPackage": "npx expo install package-name",
+
+"expoDoctor": "npx expo-doctor",
+
+"expoDoctor:help": "npx expo-doctor --help",
+
+"start": "npx expo start -c",
+
+"prebuild": "npx expo prebuild",
+
+"upgrade:dependencies": "npx expo install --fix",
+
+"prebuild:android:with:emulator": "npx expo run:android",
+
+"prebuild:ios:with:simulator": "npx expo run:ios",
+
+"pkg:check": "npx expo install --check",
+
+"pkg:fix": "npx expo install --fix",
+
+"prebuild": "yarn expo prebuild",
+
+"eas:build:configure": "eas build:configure",
+
+"env:to:eas": "eas secret:push --scope project --env-file ./.env",
+
+"local:build": "eas build --local",
+
+"dev:build": "eas build --profile development --platform android",
+
+"local:abuild": "yarn expo run:android --variant debug",
+```
+
+#### Supabase
+
+```bash
+"supa:init": "npx supabase init",
+
+"supa:start": "npx supabase start",
+
+"link:supa:database": "npx supabase link --project-ref ewrxcusjjavnccrwhvin",
+
+"gen:supa:types": "npx supabase gen types typescript --linked > src/types/supabase.ts",
+
+# "gen:supa:types": "npx supabase gen types --lang=typescript --local > utils/database.types.ts"
 ```
 
 ## Dependencies
