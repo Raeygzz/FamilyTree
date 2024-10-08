@@ -25,8 +25,8 @@ on:
           - development
           - preview
           - production
-  push:
-    branches: ["main", "releases/**", "FT-**"]
+  # push:
+  #   branches: ["main", "releases/**", "FT-**"]
   pull_request:
     branches: ["main"]
 
