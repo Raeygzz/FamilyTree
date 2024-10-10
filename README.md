@@ -82,11 +82,11 @@ yarn expo start --web
 
 "env:to:eas": "eas secret:push --scope project --env-file ./.env",
 
-"local:build": "eas build --local",
+"local:build": "eas build --local --profile <development|preview|production> --platform <android|ios> --non-interactive --clear-cache",
 
 "dev:build": "eas build --profile development --platform android",
 
-"local:abuild": "yarn expo run:android --variant debug",
+"local:android:build": "yarn expo run:android --variant debug",
 ```
 
 #### Supabase
@@ -101,6 +101,8 @@ yarn expo start --web
 "gen:supa:types": "npx supabase gen types typescript --linked > src/types/supabase.ts",
 
 # "gen:supa:types": "npx supabase gen types --lang=typescript --local > utils/database.types.ts"
+
+"supa:reset": "npx supabase <db> reset",
 ```
 
 ## Dependencies
