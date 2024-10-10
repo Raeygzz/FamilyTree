@@ -27,8 +27,8 @@ on:
           - production
   # push:
   #   branches: ["main", "releases/**", "FT-**"]
-  pull_request:
-    branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
 
 permissions:
   contents: read
