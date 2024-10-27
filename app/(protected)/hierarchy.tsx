@@ -6,12 +6,12 @@ const Hirerarchy = () => {
   const router = useRouter();
 
   const onBack = () => {
-    router.navigate("/dashboard");
+    router.navigate("/(protected)/(drawer)/(tabs)/dashboard");
   };
 
   return (
     <View>
-      <Pressable onPress={onBack} className="ml-10 mt-10">
+      <Pressable onPress={onBack} className="ml-10 mt-20">
         <Text>Back</Text>
       </Pressable>
 

@@ -12,8 +12,8 @@ const appConfigurationSlice = createSlice({
   name: "appConfiguration",
   initialState,
   reducers: {
-    setIsAuthenticated: (state, action) => {
-      state.isAuthenticated = action.payload;
+    setIsAuthenticated: (state, { payload }) => {
+      state.isAuthenticated = payload;
     },
 
     resetState: (state) => {

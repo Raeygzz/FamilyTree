@@ -4,6 +4,7 @@ import { View, Text, Pressable } from "react-native";
 
 import { useAppDispatch } from "@/redux/store";
 import { setIsAuthenticated } from "@/redux/features";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Menu = () => {
   const router = useRouter();
@@ -11,6 +12,8 @@ const Menu = () => {
 
   const onSignout = () => {
     dispatch(setIsAuthenticated(false));
+
+    AsyncStorage.clear();
 
     router.replace("/login");
   };
