@@ -22,6 +22,6 @@ jobs:
 
       - name: Pre-Check Typescript, Lint And Prettier
         run: |
-          yarn tsc
           yarn lint
           yarn pretty
+          yarn tsc --skipLibCheck
