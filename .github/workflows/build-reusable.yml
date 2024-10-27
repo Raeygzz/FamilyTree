@@ -58,11 +58,11 @@ jobs:
       # - name: Set Gradle Memory Options
       #   run: echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=512m" >> ./android/gradle.properties
 
-      - name: Build Web App
-        run: yarn expo export --platform web
+      # - name: Build Web App
+      #   run: yarn expo export --platform web
 
-      # - name: Build Android App
-      #   run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
+      - name: Build Android App
+        run: eas build --platform android --profile development --local --non-interactive --clear-cache --output ${{ github.workspace }}/app-release.apk
 
-      - name: Build IOS App
-        run: eas build --platform ios --profile preview --local --non-interactive --clear-cache --no-wait --output=${{ github.workspace }}/app-release.apk
+      # - name: Build IOS App
+      #   run: eas build --platform ios --profile preview --local --non-interactive --clear-cache --no-wait --output=${{ github.workspace }}/app-release.apk

@@ -54,6 +54,8 @@ yarn expo start --web
 #### Expo, EAS
 
 ```bash
+"yarn:clear": "yarn start --reset-cache",
+
 "ci": "yarn tsc && yarn lint",
 
 "installPackage": "npx expo install package-name",
@@ -63,6 +65,10 @@ yarn expo start --web
 "expoDoctor:help": "npx expo-doctor --help",
 
 "start": "npx expo start -c",
+
+"start:devClient": "npx expo start --clear --dev-client",
+
+"start:port:devClient": "npx expo start --port 61005 --clear --dev-client",
 
 "prebuild": "npx expo prebuild",
 
@@ -87,6 +93,14 @@ yarn expo start --web
 "dev:build": "eas build --profile development --platform android",
 
 "local:android:build": "yarn expo run:android --variant debug",
+
+"test": "jest",
+
+"test:watch": "npm run test -- --watch",
+
+"test:ci": "npm run test -- --coverage",
+
+"test:badges": "npm run test:ci && jest-coverage-badges --input coverage/coverage-summary.json --output __badges__"
 ```
 
 #### Supabase
@@ -103,6 +117,12 @@ yarn expo start --web
 # "gen:supa:types": "npx supabase gen types --lang=typescript --local > utils/database.types.ts"
 
 "supa:reset": "npx supabase <db> reset",
+```
+
+#### Deeplink
+
+```bash
+"deeplink:test": "npx uri-scheme open 'familytree://(protected)/profile/' --<android|ios>"
 ```
 
 ## Dependencies
