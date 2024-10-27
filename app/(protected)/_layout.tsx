@@ -14,7 +14,7 @@ export default function PrivateLayout() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="(tabs)" options={{}} />
+      <Stack.Screen name="(drawer)" options={{}} />
       <Stack.Screen name="profile" options={{}} />
       <Stack.Screen name="hierarchy" options={{}} />
       <Stack.Screen name="payments" options={{}} />
