@@ -20,6 +20,7 @@ web-build/
 .env
 
 # app builds
+*.aab
 *.apk
 *.ipa
 *.tar.gz
