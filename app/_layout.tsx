@@ -4,7 +4,7 @@ import { Slot, SplashScreen, Stack } from "expo-router";
 import "../global.css";
 import { store } from "@/redux/store";
 // import mockApi from "@/services/api/mock";
-import { AppConfiguration } from "@/components";
+import { AppConfiguration } from "@/components/configuration";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
