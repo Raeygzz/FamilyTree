@@ -1,1 +1,3 @@
-export const reduxActions = {};
+export const reduxActions = {
+  user: {},
+};
