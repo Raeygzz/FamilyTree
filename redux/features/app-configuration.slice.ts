@@ -16,12 +16,12 @@ const appConfigurationSlice = createSlice({
       state.isAuthenticated = payload;
     },
 
-    resetState: (state) => {
+    resetAppConfigurationState: (state) => {
       state.isAuthenticated = false;
     },
   },
 });
 
-export const { setIsAuthenticated, resetState } = appConfigurationSlice.actions;
+export const { setIsAuthenticated, resetAppConfigurationState } = appConfigurationSlice.actions;
 
 export default appConfigurationSlice.reducer;

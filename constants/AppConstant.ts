@@ -34,7 +34,11 @@ const AppConstants = Object.freeze({
     biometricUserSession: "biometric-user-session",
     biometricFirstScreenDismissed: "biometric-first-screen-dismissed",
   },
-  ApiKeys: {},
+  ApiKeys: {
+    user: {
+      insertUser: "/Users",
+    },
+  },
 });
 
 export { AppConstants };

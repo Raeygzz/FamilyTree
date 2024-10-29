@@ -1,31 +1,37 @@
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  // AxiosRequestConfig, // Change to InternalAxiosRequestConfig
+  InternalAxiosRequestConfig,
+} from "axios";
 
-import { Api } from "./api";
+export async function requestInterceptor<I>(config: InternalAxiosRequestConfig<I>) {
+  config.headers["apiKey"] = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+  config.headers["Authorization"] = `Bearer ${process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY}`;
+  config.headers["Prefer"] = "return=minimal";
 
-Api.interceptors.request.use(
-  (request) => {
-    const accessToken = AsyncStorage.getItem("accessToken");
+  return config;
+}
 
-    if (accessToken) {
-      request.headers["Authorization"] = `Bearer ${accessToken}`;
-    }
+export async function responseInterceptor<I>(Api: AxiosInstance, error: AxiosError<I>) {
+  if (axios.isAxiosError(error)) {
+    const { message } = error;
+    const { method, url } = error.config as InternalAxiosRequestConfig;
+    const { statusText, status } = (error.response as AxiosResponse) ?? {};
 
-    return request;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+    console.log("url ====================> ", url);
+    console.log("method ====================> ", method);
+    console.log("status ====================> ", status);
+    console.log("message ====================> ", message);
+    console.log("statusText ====================> ", statusText);
 
-Api.interceptors.response.use(
-  (response) => response, // Directly return successful responses.
+    // const originalRequest = error.config;
 
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
+    if (error?.response?.status === 401) {
+      // if (error?.response?.status === 401 && !originalRequest?._retry) {
+      // originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
 
       try {
         const refreshToken = AsyncStorage.getItem("refreshToken"); // Retrieve the stored refresh token.
@@ -44,10 +50,11 @@ Api.interceptors.response.use(
         // Update the authorization header with the new access token.
         Api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-        return Api(originalRequest); // Retry the original request with the new access token.
+        // return Api(originalRequest); // Retry the original request with the new access token.
       } catch (refreshError) {
         // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
         console.error("Token refresh failed:", refreshError);
+
         AsyncStorage.removeItem("accessToken");
         AsyncStorage.removeItem("refreshToken");
 
@@ -58,5 +65,5 @@ Api.interceptors.response.use(
     }
 
     return Promise.reject(error); // For all other errors, return the error as is.
-  },
-);
+  }
+}
