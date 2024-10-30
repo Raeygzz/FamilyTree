@@ -4,6 +4,7 @@ import { View, Text, TextInput, TextInputProps } from "react-native";
 interface InputProps extends TextInputProps {
   inputRef?: RefObject<TextInput> | null | undefined;
   label: string;
+  note?: string;
   onChangeText: (val: string) => void;
   placeholder: string;
   required?: boolean;
@@ -27,6 +28,7 @@ interface InputProps extends TextInputProps {
 const Input = ({
   label,
   placeholder,
+  note = "",
   onChangeText,
   value,
   required,
@@ -47,6 +49,8 @@ const Input = ({
           <Text className="text-slate-400 font-normal text-sm not-italic">(Optional)</Text>
         )}
       </View>
+
+      {note ? <Text className="text-xs font-medium text-orange-400 italic">{note}</Text> : null}
 
       <TextInput
         ref={inputRef}

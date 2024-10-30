@@ -2,6 +2,7 @@ import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Text, View, TextInput, Pressable } from "react-native";
 
+import { usePlatform } from "@/hooks";
 import { insertUser } from "@/redux/features/user.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Footer, Header, Input, PageView, RadioButton } from "@/components";
@@ -25,6 +26,7 @@ export default function App() {
 
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { isNativePlatform } = usePlatform();
   const middleNameRef = useRef<TextInput>(null);
   const lastNameRef = useRef<TextInput>(null);
   const address1Ref = useRef<TextInput>(null);
@@ -66,11 +68,20 @@ export default function App() {
     <PageView>
       <Header />
 
-      <Text className="text-orange-400 mt-5 text-center text-xl font-semibold md:text-2xl lg:text-4xl mb-10">
+      <Text className="text-orange-400 mt-5 text-center text-xl font-semibold md:text-2xl lg:text-4xl mb-6">
         Welcome to K.M.T Foundation - Next Generation
       </Text>
 
-      <View className="w-full px-5 md:w-1/3 lg:w-1/5 md:self-center">
+      <View
+        className={`${isNativePlatform ? "py-3" : "py-1"} px-3 w-[94%] md:w-1/2 lg:w-1/5 self-center mb-5 shadow-md text-orange-400 rounded-lg flex-row justify-start`}>
+        <Text className="w-[10%] text-xs font-semibold text-orange-400 italic">Note:</Text>
+
+        <Text className="w-[90%] text-xs font-medium text-orange-400 italic">
+          Please type with english keyboard while filing up the form.
+        </Text>
+      </View>
+
+      <View className="w-full px-5 md:w-1/2 lg:w-1/5 md:self-center">
         <Input
           label="First Name"
           placeholder="Regan"
@@ -150,6 +161,7 @@ export default function App() {
           onSubmitEditing={() => phoneRef?.current?.focus()}
           blurOnSubmit={false}
           required
+          note="Please fill your nepali date of birth."
         />
 
         <Input
