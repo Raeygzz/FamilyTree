@@ -33,7 +33,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     resetUserState: (state) => {
-      state = initialState;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.error = undefined;
     },
   },
   extraReducers: (builder) => {

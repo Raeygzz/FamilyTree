@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Text, View, TextInput, Pressable } from "react-native";
 
 import { usePlatform } from "@/hooks";
-import { insertUser } from "@/redux/features/user.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { insertUser, resetUserState } from "@/redux/features/user.slice";
 import { Footer, Header, Input, PageView, RadioButton } from "@/components";
 
 export default function App() {
@@ -37,9 +37,11 @@ export default function App() {
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(resetUserState());
+
       router.push("/(auth)/success");
     }
-  }, [isSuccess, router]);
+  }, [dispatch, isSuccess, router]);
 
   const onSubmit = () => {
     let obj = {

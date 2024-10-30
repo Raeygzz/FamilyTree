@@ -37,9 +37,10 @@ const AppConfiguration = ({ children }: PropsWithChildren) => {
   const dispatch = useAppDispatch();
   const navigation = useRootNavigationState();
 
-  console.log("🚀 ~ AppConfiguration ~ segments:", segments);
-  console.log("🚀 ~ AppConfiguration ~ navigation:", navigation);
-  console.log("🚀 ~ AppConfiguration ~ isAuthenticated:", isAuthenticated);
+  // console.log("🚀 segments: =========================> ", segments);
+  // console.log("🚀 navigation: =========================> ", navigation);
+  // console.log("🚀 isAuthenticated: =========================> ", isAuthenticated);
+  // console.log("🚀 isAuthenticationReady: =========================> ", isAuthenticationReady);
 
   const [loaded, error] = useFonts({
     HankenGrotesk_100Thin,
