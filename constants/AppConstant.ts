@@ -34,9 +34,22 @@ const AppConstants = Object.freeze({
     biometricUserSession: "biometric-user-session",
     biometricFirstScreenDismissed: "biometric-first-screen-dismissed",
   },
+  Static: {
+    YES_NO_ARRAY: [
+      { id: "0", label: "Yes", value: "1" },
+      { id: "1", label: "No", value: "0" },
+    ],
+  },
   ApiKeys: {
     user: {
+      fetchUsers: "/Users?select=*",
       insertUser: "/Users",
+    },
+    heads: {
+      fetchHeads: "/Heads?select=*",
+    },
+    organization: {
+      fetchOrganization: "/Organization?select=*",
     },
   },
 });
