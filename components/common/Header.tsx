@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <View className="bg-orange-50 flex-row justify-end items-center w-full h-10">
       <Pressable onPress={onContactUs}>
-        <Text className="px-5 text-orange-400 text-lg font-medium not-italic text-right">Contact Us</Text>
+        <Text className="px-10 text-orange-400 text-lg font-medium not-italic text-right">Contact Us</Text>
       </Pressable>
     </View>
   );
