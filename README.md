@@ -94,6 +94,10 @@ yarn expo start --web
 
 "local:android:build": "yarn expo run:android --variant debug",
 
+"web:build": "npx expo export -p web",
+
+"locally:test:hosted:prod" "npx serve dist --single",
+
 "test": "jest",
 
 "test:watch": "npm run test -- --watch",
