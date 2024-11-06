@@ -7,7 +7,6 @@ import { usePlatform } from "@/hooks";
 import { UserSchema } from "@/validations";
 import { AppConstants } from "@/constants";
 import { fetchOrganization } from "@/redux/features";
-import { ToastFilterErrorMessageType } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Footer, Header, Input, PageView, RadioButton, Picker, ToastMessage } from "@/components";
 import {
@@ -27,7 +26,19 @@ export default function App() {
   const [openKidsPicker, setOpenKidsPicker] = useState(false);
   const [openToast, setOpenToast] = useState(false);
   const [error, setError] = useState({ title: "", message: "" });
-  const [formErrors, setFormErrors] = useState<ToastFilterErrorMessageType>();
+
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { isNativePlatform } = usePlatform();
+  const middleNameRef = useRef<TextInput>(null);
+  const lastNameRef = useRef<TextInput>(null);
+  const address1Ref = useRef<TextInput>(null);
+  const address2Ref = useRef<TextInput>(null);
+  const phoneRef = useRef<TextInput>(null);
+  const emailRef = useRef<TextInput>(null);
+  const occupationRef = useRef<TextInput>(null);
+  // eslint-disable-next-line no-undef
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>();
 
   const { handleChange, handleSubmit, handleBlur, values, errors, touched, setFieldValue, setFieldTouched } = useFormik(
     {
@@ -56,7 +67,6 @@ export default function App() {
         occupation: "",
       },
       onSubmit: (values) => {
-        setFormErrors(undefined);
         setError({ title: "", message: "" });
 
         let valuesFullName = values.firstName + " " + values.middleName + " " + values.lastName;
@@ -109,19 +119,6 @@ export default function App() {
     },
   );
 
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-  const { isNativePlatform } = usePlatform();
-  const middleNameRef = useRef<TextInput>(null);
-  const lastNameRef = useRef<TextInput>(null);
-  const address1Ref = useRef<TextInput>(null);
-  const address2Ref = useRef<TextInput>(null);
-  const phoneRef = useRef<TextInput>(null);
-  const emailRef = useRef<TextInput>(null);
-  const occupationRef = useRef<TextInput>(null);
-  // eslint-disable-next-line no-undef
-  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>();
-
   useEffect(() => {
     Promise.all([
       dispatch(fetchOrganization()),
@@ -151,16 +148,11 @@ export default function App() {
   ]);
 
   useEffect(() => {
-    if (Object.keys(touched).length !== 0 && Object.keys(errors).length !== 0) {
-      setFormErrors(errors);
-      setOpenToast(true);
-    }
-
     // eslint-disable-next-line no-extra-boolean-cast
     if (!!insertUserError) {
       setOpenToast(true);
     }
-  }, [touched, errors, insertUserError]);
+  }, [insertUserError]);
 
   useEffect(() => {
     if (openToast) {
@@ -186,7 +178,25 @@ export default function App() {
     }
   }, [dispatch, isSuccess, router]);
 
-  console.log("errors ============> ", errors);
+  const onDOBChangeHandler = (dob: string) => {
+    if (dob.length === 0) {
+      setFieldValue("dob", "");
+      setFieldTouched("dob", true);
+      return;
+    }
+
+    // Remove any non-numeric characters
+    const cleaned = dob.replace(/[^0-9]/g, "");
+
+    // Format to YYYY/MM/DD
+    let formatted = cleaned;
+    if (cleaned.length > 4) formatted = `${cleaned.slice(0, 4)}/${cleaned.slice(4)}`;
+    if (cleaned.length > 6) formatted = `${cleaned.slice(0, 4)}/${cleaned.slice(4, 6)}/${cleaned.slice(6, 8)}`;
+
+    setFieldValue("dob", formatted);
+    setFieldTouched("dob", true);
+  };
+
   return (
     <PageView>
       <Header />
@@ -289,8 +299,9 @@ export default function App() {
         <Input
           label="Date of Birth"
           returnKeyType="next"
-          placeholder="22/01/2048"
-          onChangeText={handleChange("dob")}
+          placeholder="YYYY/MM/DD"
+          keyboardType="number-pad"
+          onChangeText={onDOBChangeHandler}
           value={values.dob}
           onBlur={handleBlur("dob")}
           error={touched.dob ? errors.dob : undefined}
@@ -455,7 +466,6 @@ export default function App() {
         bgColor="bg-red-50"
         textColor="text-red-500"
         title={error?.title}
-        formErrors={formErrors}
         message={error?.message}
       />
     </PageView>

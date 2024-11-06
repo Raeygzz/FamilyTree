@@ -49,7 +49,7 @@ const Picker = ({
   );
 
   return (
-    <View className="mb-6">
+    <View className="mb-6 z-20">
       <View className="flex-row justify-start items-center gap-1">
         <Text className="font-semibold text-sm not-italic text-black">{label}</Text>
 
@@ -73,7 +73,7 @@ const Picker = ({
 
       {error ? <Text className="text-sm pl-2 font-normal not-italic text-red-600">{error}</Text> : null}
 
-      <ScrollView className="absolute top-[60px] w-full bg-slate-50 rounded-bl-md rounded-br-md">
+      <ScrollView className="absolute z-10 top-[60px] w-full bg-slate-50 rounded-bl-md rounded-br-md">
         {pickerList}
       </ScrollView>
     </View>
