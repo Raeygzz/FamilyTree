@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, Text } from "react-native";
 
 import { usePlatform } from "@/hooks";
@@ -6,27 +6,21 @@ import { usePlatform } from "@/hooks";
 type ToastMessageProps = {
   message?: string;
   open: boolean;
-  bgColor?: string;
-  textColor?: string;
   title?: string;
 };
 
-const ToastMessage = ({
-  bgColor = "bg-orange-500",
-  message = "",
-  open = false,
-  textColor = "text-orange-500",
-  title,
-}: ToastMessageProps) => {
+const ToastMessage = ({ message = "", open = false, title }: ToastMessageProps) => {
   const { isWeb } = usePlatform();
 
-  if (!open) return;
+  let isOpen = useMemo(() => open, [open]);
+
+  if (!isOpen) return;
 
   return (
-    <View className={`${isWeb ? "motion-safe:animate-bounce" : ""} w-full shadow-md ${bgColor} p-3 absolute bottom-0`}>
-      <Text className={`text-base font-medium not-italic ${textColor} mb-2`}>{title}</Text>
+    <View className={`${isWeb ? "motion-safe:animate-bounce" : ""} w-full shadow-md bg-red-50 p-3 absolute bottom-0`}>
+      <Text className={`text-base font-medium not-italic text-red-500 mb-2`}>{title}</Text>
 
-      {message !== "" && <Text className="text-sm font-normal not-italic text-orange-300">{message}</Text>}
+      {message !== "" && <Text className="text-sm font-normal not-italic text-red-500">{message}</Text>}
     </View>
   );
 };
