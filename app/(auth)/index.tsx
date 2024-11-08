@@ -429,6 +429,10 @@ export default function App() {
 
               <RadioButton title="A-" selected={values.bloodGroup} onPress={() => setFieldValue("bloodGroup", "A-")} />
 
+              <RadioButton title="B+" selected={values.bloodGroup} onPress={() => setFieldValue("bloodGroup", "B+")} />
+
+              <RadioButton title="B-" selected={values.bloodGroup} onPress={() => setFieldValue("bloodGroup", "B-")} />
+
               <RadioButton
                 title="AB+"
                 selected={values.bloodGroup}
