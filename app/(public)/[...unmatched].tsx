@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { Text, View, Image } from "react-native";
+import { Text, View } from "react-native";
 
 const NotFoundPage = () => {
   return (
@@ -13,15 +13,6 @@ const NotFoundPage = () => {
 
       <View className="flex h-full flex-col items-center justify-center py-8 gap-y-6 bg-white">
         <Text className="text-base font-semibold text-black">404 Not Found!</Text>
-
-        <Image
-          style={{
-            width: "100%",
-            resizeMode: "contain",
-          }}
-          source={require("@/assets/images/page-not-found.png")}
-          alt="404"
-        />
       </View>
     </>
   );
