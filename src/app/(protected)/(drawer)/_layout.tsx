@@ -146,7 +146,7 @@ export default function DrawerLayout() {
   return (
     <GestureHandlerRootView className="flex-1">
       <Drawer
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
+        drawerContent={(props: any) => <CustomDrawerContent {...props} />}
         screenOptions={{
           drawerHideStatusBarOnOpen: true,
           drawerActiveBackgroundColor: "#5363df",

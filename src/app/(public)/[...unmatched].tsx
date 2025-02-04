@@ -1,3 +1,4 @@
+import React from "react";
 import { Stack } from "expo-router";
 import { Text, View } from "react-native";
 
@@ -7,7 +8,7 @@ const NotFoundPage = () => {
       <Stack.Screen
         options={{
           title: "404 Not Found!",
-          headerBackTitleVisible: false,
+          // headerBackTitleVisible: false,
         }}
       />
 
