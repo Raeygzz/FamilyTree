@@ -2,8 +2,8 @@ import React from "react";
 import { useRouter } from "expo-router";
 import { View, Text, Pressable } from "react-native";
 
-import { usePlatform } from "@/hooks";
-import { Footer, PageView } from "@/components";
+import { usePlatform } from "@/src/hooks";
+import { Footer, PageView } from "@/src/components";
 
 const Success = () => {
   const router = useRouter();

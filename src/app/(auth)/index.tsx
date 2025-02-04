@@ -1,20 +1,21 @@
+import React from "react";
 import { useFormik } from "formik";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Text, View, TextInput, Pressable } from "react-native";
 
-import { usePlatform } from "@/hooks";
-import { UserSchema } from "@/validations";
-import { AppConstants } from "@/constants";
-import { fetchOrganization } from "@/redux/features";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { Footer, Header, Input, PageView, RadioButton, Picker, ToastMessage } from "@/components";
+import { usePlatform } from "@/src/hooks";
+import { UserSchema } from "@/src/validations";
+import { AppConstants } from "@/src/constants";
+import { fetchOrganization } from "@/src/redux/features";
+import { useAppDispatch, useAppSelector } from "@/src/redux/store";
+import { Footer, Header, Input, PageView, RadioButton, Picker, ToastMessage } from "@/src/components";
 import {
   // fetchHeads,
   fetchUsers,
   insertUser,
   resetUserState,
-} from "@/redux/features/user.slice";
+} from "@/src/redux/features/user.slice";
 
 export default function App() {
   const { data: organizationData } = useAppSelector((state) => state.organization);

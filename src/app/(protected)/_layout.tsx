@@ -1,6 +1,6 @@
 import { Redirect, Stack } from "expo-router";
 
-import { useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/src/redux/store";
 
 export default function PrivateLayout() {
   const { isAuthenticated } = useAppSelector((state) => state.appConfiguration);

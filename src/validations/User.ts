@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-import { AppConstants, RegexExpression } from "@/constants";
+import { AppConstants, RegexExpression } from "@/src/constants";
 
 const digitsOnly = (value?: string) => RegexExpression.NumbersOnly.test(value ?? "");
 

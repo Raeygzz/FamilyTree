@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-import { AppConstants } from "@/constants";
+import { AppConstants } from "@/src/constants";
 import { formatErrorAndThrow } from "./error-mapper";
 import { requestInterceptor, responseInterceptor } from "./interceptor";
 

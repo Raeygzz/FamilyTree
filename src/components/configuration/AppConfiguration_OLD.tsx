@@ -24,8 +24,8 @@ import {
   HankenGrotesk_900Black_Italic,
 } from "@expo-google-fonts/hanken-grotesk";
 
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { setIsAuthenticated } from "@/redux/features";
+import { useAppDispatch, useAppSelector } from "@/src/redux/store";
+import { setIsAuthenticated } from "@/src/redux/features";
 
 const useProtectedRoute = () => {
   const { isAuthenticated } = useAppSelector((state) => state.appConfiguration);

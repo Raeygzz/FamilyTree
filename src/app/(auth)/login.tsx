@@ -4,8 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert, StyleSheet, View, AppState, TextInput, Pressable, Text } from "react-native";
 
 import { supabase } from "../../lib/supabase";
-import { useAppDispatch } from "@/redux/store";
-import { setIsAuthenticated } from "@/redux/features";
+import { useAppDispatch } from "@/src/redux/store";
+import { setIsAuthenticated } from "@/src/redux/features";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive

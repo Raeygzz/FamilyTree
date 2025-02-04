@@ -23,8 +23,8 @@ import {
   HankenGrotesk_900Black_Italic,
 } from "@expo-google-fonts/hanken-grotesk";
 
-import { setIsAuthenticated } from "@/redux/features";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { setIsAuthenticated } from "@/src/redux/features";
+import { useAppDispatch, useAppSelector } from "@/src/redux/store";
 
 const AppConfiguration = ({ children }: PropsWithChildren) => {
   const { isAuthenticated } = useAppSelector((state) => state.appConfiguration);

@@ -2,8 +2,8 @@ import React from "react";
 import { useRouter } from "expo-router";
 import { View, Text, Pressable } from "react-native";
 
-import { useAppDispatch } from "@/redux/store";
-import { setIsAuthenticated } from "@/redux/features";
+import { useAppDispatch } from "@/src/redux/store";
+import { setIsAuthenticated } from "@/src/redux/features";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Menu = () => {

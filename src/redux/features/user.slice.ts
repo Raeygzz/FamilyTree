@@ -1,7 +1,7 @@
 import { createAsyncThunk, SerializedError, createSlice } from "@reduxjs/toolkit";
 
-import { Api } from "@/services/api";
-import { AppConstants } from "@/constants";
+import { Api } from "@/src/services/api";
+import { AppConstants } from "@/src/constants";
 import { FetchHeadsResponse, FetchUsersResponse, UserRequest, UserResponse } from "../models";
 
 export const fetchHeads = createAsyncThunk<FetchHeadsResponse[], void>("user/fetchHeads", async (_, api) => {

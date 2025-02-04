@@ -1,8 +1,8 @@
 import { createAsyncThunk, SerializedError, createSlice } from "@reduxjs/toolkit";
 
-import { Api } from "@/services/api";
-import { AppConstants } from "@/constants";
-import { FetchOrganizationResponse } from "../models/";
+import { Api } from "@/src/services/api";
+import { AppConstants } from "@/src/constants";
+import { FetchOrganizationResponse } from "../models";
 
 export const fetchOrganization = createAsyncThunk<FetchOrganizationResponse[], void>(
   "organization/fetchOrganization",

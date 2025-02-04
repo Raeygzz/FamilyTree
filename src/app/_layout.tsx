@@ -1,10 +1,11 @@
+import "../../gesture-handler";
 import { Provider } from "react-redux";
 import { Slot, SplashScreen, Stack } from "expo-router";
 
-import "../global.css";
-import { store } from "@/redux/store";
+import "../components/theme/global.css";
+import { store } from "@/src/redux/store";
 // import mockApi from "@/services/api/mock";
-import { AppConfiguration } from "@/components";
+import { AppConfiguration } from "@/src/components";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();

@@ -2,8 +2,8 @@ import React from "react";
 import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
 
-import { usePlatform } from "@/hooks";
-import { BackButton, Footer, PageView } from "@/components";
+import { usePlatform } from "@/src/hooks";
+import { BackButton, Footer, PageView } from "@/src/components";
 
 const Contact = () => {
   const router = useRouter();

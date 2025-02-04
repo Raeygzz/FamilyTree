@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { View, Text } from "react-native";
 
-import { usePlatform } from "@/hooks";
+import { usePlatform } from "@/src/hooks";
 
 type ToastMessageProps = {
   message?: string;
