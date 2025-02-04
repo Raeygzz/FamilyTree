@@ -28,7 +28,9 @@ To build and run the project following cli is necessary
 To run this project, you will need to add the following environment variables to your .env file
 
 ```
-# <Add variables>
+EXPO_UNSTABLE_ATLAS=
+EXPO_PUBLIC_SUPABASE_URL=
+EXPO_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
 ## Setup Android/iOS/Web app
@@ -44,9 +46,11 @@ yarn install
 ## Run Locally
 
 ```bash
-npx expo start --web
+npm run start > `for Android / IOS`
+npx expo start --web > `for Web`
 or
-yarn expo start --web
+yarn start > `for Android / IOS`
+yarn expo start --web < `for web`
 ```
 
 ## Script
@@ -72,15 +76,13 @@ yarn expo start --web
 
 "prebuild": "npx expo prebuild",
 
-"upgrade:dependencies": "npx expo install --fix",
+"pkg:check": "npx expo install --check",
+
+"pkg:fix": "npx expo install --fix",
 
 "prebuild:android:with:emulator": "npx expo run:android",
 
 "prebuild:ios:with:simulator": "npx expo run:ios",
-
-"pkg:check": "npx expo install --check",
-
-"pkg:fix": "npx expo install --fix",
 
 "prebuild": "yarn expo prebuild",
 
@@ -132,10 +134,18 @@ yarn expo start --web
 ## Dependencies
 
 ```
-"@expo/vector-icons": "^14.0.2",
+"@expo-google-fonts/hanken-grotesk": "^0.2.3",
+"@expo/vector-icons": "^14.0.3",
+"@react-native-async-storage/async-storage": "1.23.1",
+"@react-native-community/netinfo": "11.3.1",
+"@react-navigation/drawer": "^6.7.2",
 "@react-navigation/native": "^6.0.2",
+"@reduxjs/toolkit": "^2.2.7",
+"@supabase/supabase-js": "^2.45.4",
+"axios": "^1.7.7",
 "expo": "~51.0.28",
 "expo-constants": "~16.0.2",
+"expo-dev-client": "~4.0.26",
 "expo-font": "~12.0.9",
 "expo-linking": "~6.3.1",
 "expo-router": "~3.5.23",
@@ -143,6 +153,8 @@ yarn expo start --web
 "expo-status-bar": "~1.12.1",
 "expo-system-ui": "~3.0.7",
 "expo-web-browser": "~13.0.3",
+"formik": "^2.4.6",
+"nativewind": "^4.0.1",
 "react": "18.2.0",
 "react-dom": "18.2.0",
 "react-native": "0.74.5",
@@ -150,20 +162,36 @@ yarn expo start --web
 "react-native-reanimated": "~3.10.1",
 "react-native-safe-area-context": "4.10.5",
 "react-native-screens": "3.31.1",
+"react-native-svg": "15.2.0",
 "react-native-web": "~0.19.10",
-"expo-dev-client": "~4.0.26"
+"react-redux": "^9.1.2",
+"tailwindcss": "^3.4.10",
+"yup": "^1.4.0"
 ```
 
 ## devDependencies
 
 ```
 "@babel/core": "^7.20.0",
+"@commitlint/cli": "^19.5.0",
+"@commitlint/config-conventional": "^19.5.0",
 "@types/jest": "^29.5.12",
 "@types/react": "~18.2.45",
 "@types/react-test-renderer": "^18.0.7",
+"axios-auth-refresh": "^3.3.6",
+"axios-mock-adapter": "^2.0.0",
+"eslint": "^8.57.0",
+"eslint-config-expo": "^7.1.2",
+"eslint-config-prettier": "^9.1.0",
+"eslint-plugin-prettier": "^5.2.1",
+"expo-atlas": "^0.3.0",
+"husky": "^9.1.6",
 "jest": "^29.2.1",
 "jest-expo": "~51.0.3",
+"lint-staged": "^15.2.10",
+"prettier": "^3.3.3",
 "react-test-renderer": "18.2.0",
+"serve": "^14.2.4",
 "typescript": "~5.3.3"
 ```
 
