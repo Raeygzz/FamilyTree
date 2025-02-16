@@ -1,6 +1,6 @@
 # Family Tree Application Template
 
-This is a Family Tree Application.
+This is a "Family Tree Application".
 
 ## Prerequisite
 
